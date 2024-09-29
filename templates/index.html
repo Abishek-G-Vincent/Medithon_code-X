@@ -3,19 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Classifier</title>
+    <title>Hospital Email Spam Checker</title>
+    <style>
+        /* General Reset and Body Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Soft Teal to Lavender Gradient Background */
+            background: linear-gradient(135deg, #a2d5f2, #d4a5f3);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #34495e;
+        }
+
+        /* Main Container Styling */
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+            animation: fadeIn 0.7s ease-in-out;
+            border: 5px solid #8e44ad; /* Purple border for a vibrant look */
+        }
+
+        /* h1 Styling */
+        h1 {
+            color: #8360c3; /* Muted lavender derived from the gradient */
+            font-size: 32px;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        /* Textarea Styling */
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 15px;
+            border: 2px solid #dfe6e9;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: none;
+            outline: none;
+            background-color: #f7f9fc; /* Light background that complements the gradient */
+            color: #34495e; /* Soft, dark gray for better readability */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        textarea:focus {
+            border-color: #16a085; /* Sea green */
+            box-shadow: 0 0 10px rgba(22, 160, 133, 0.3);
+            background-color: #f0f9ff; /* Lighter background for focus */
+        }
+
+        /* Submit Button Styling */
+        input[type="submit"] {
+            background-color: #f39c12; /* Soft yellow-orange that stands out yet blends with the gradient */
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
+        }
+
+        input[type="submit"]:hover {
+            background-color: #e67e22;
+            transform: scale(1.05);
+        }
+
+        input[type="submit"]:active {
+            background-color: #d35400;
+        }
+
+        /* Result Section Styling */
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #eef9f2; /* Light mint green */
+            border-left: 5px solid #1abc9c; /* Green left border */
+            border-radius: 8px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .result h2 {
+            color: #3498db; /* Bright blue */
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .result p {
+            font-size: 18px;
+            color: #34495e;
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            textarea {
+                font-size: 14px;
+            }
+
+            input[type="submit"] {
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Email Classifier</h1>
-    
-    <form action="/" method="POST">
-        <textarea name="email" rows="10" cols="50" placeholder="Enter the email content here">{{ email_text if email_text else '' }}</textarea><br>
-        <input type="submit" value="Classify Email">
-    </form>
-    
-    {% if prediction is not none %}
-    <h2>Classification Result</h2>
-    <p>The email is classified as: <strong>{{ prediction }}</strong></p>
-    {% endif %}
+
+    <div class="container">
+        <h1>Hospital Email Spam Checker</h1>
+
+        <form action="/" method="POST">
+            <textarea name="email" placeholder="Enter the email content here">{{ email_text if email_text else '' }}</textarea>
+            <input type="submit" value="Classify Email">
+        </form>
+
+        {% if prediction is not none %}
+        <div class="result">
+            <h2>Classification Result</h2>
+            <p>The email is classified as: <strong>{{ prediction }}</strong></p>
+        </div>
+        {% endif %}
+    </div>
+
 </body>
 </html>
