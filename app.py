@@ -10,17 +10,14 @@ with open('email_classifier_model.pkl', 'rb') as model_file:
 # Initialize the Flask application
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('index.html')  # Rendering index.html for the home page
-
-@app.route('/classify', methods=['POST'])
-def classify():
-    email_text = request.form['email']
-    prediction = clf.predict([email_text])[0]  # Predict if the email is spam or not
-    result = "Spam" if prediction == 1 else "Not Spam"
-    
-    return render_template('result.html', prediction=result)  # Rendering result.html and passing the prediction
+    if request.method == 'POST':
+        email_text = request.form['email']
+        prediction = clf.predict([email_text])[0]  # Predict if the email is spam or not
+        result = "Spam" if prediction == 1 else "Not Spam"
+        return render_template('index.html', prediction=result, email_text=email_text)  # Pass result back to the same page
+    return render_template('index.html', prediction=None)
 
 if __name__ == '__main__':
     app.run(debug=True)
